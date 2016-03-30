@@ -1,0 +1,10 @@
+body{
+    background-color:lightSeaGreen;
+    transition:3s;
+}
+
+#input_box{
+    font-size: 30px;
+    height: 30px;
+    text-align: center;
+}
