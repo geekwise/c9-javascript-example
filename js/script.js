@@ -1,91 +1,105 @@
-var ul_element;
-var li_element;
-var body_element = document.body;
-var mouseover_status;
-var timeout;
-
-var set_class_name = function(element_name,class_name){
-    element_name.className = class_name;
-}
-
-
 var attach_css = function(css_file_location){
-  
-  css_link_element = document.createElement('link');
-  css_link_element.setAttribute('type','text/css');
-  css_link_element.setAttribute('rel','stylesheet');
-  css_link_element.setAttribute('href',css_file_location);
-  
-  document.head.appendChild(css_link_element);
     
-};
+    var css_link_element = document.createElement('link');
+    css_link_element.setAttribute('type','text/css');
+    css_link_element.setAttribute('rel','stylesheet');
+    css_link_element.setAttribute('href',css_file_location);
+    
+    document.head.appendChild(css_link_element);
+    
+}
 
-var toggle_class = function(element,class_on_state,class_off_state){
-    element.classList.toggle(class_on_state);
-    element.classList.toggle(class_off_state);
+var close_menu_timeout = function(){
+ 
+    window.setTimeout(close_menu(ul_id),1000);
+    
 }
 
 
-var create_element = function(element_name){
-    return document.createElement(element_name);
-};
-
-var attach_element = function(element_child){
-    this.appendChild(element_child);
+var close_menu = function(element_id){
+    element_id.className = 'off';
 }
 
 
-document.addEventListener('DOMContentLoaded',function(event){
-    
-    
-    attach_css('css/main.css');
-    
-    
-    ul_element = create_element('ul');
-    ul_element.textContent = 'ul';
-    ul_element.className = 'off';
-    
-    ul_element.addEventListener('click',function(){
-        
-        toggle_class(this,'off','on');
-        
-        
-    });
-    
-    ul_element.addEventListener('mouseover',function(event){
-        this.className = 'on';
-    })
 
-    
+var toggle_class = function(element_id,off_state,on_state){
+    element_id.classList.toggle(off_state);
+    element_id.classList.toggle(on_state);
+}
 
 
-    
-    
-    document.body.appendChild(ul_element);
-    
-    for(var i=0; i < 10; i++){
-        
-        var li = create_element('li');
-       
-        li.textContent = i;
-        li.addEventListener('mouseout',function(event){
-                
-           timeout = window.setTimeout(set_class_name(ul_element,'off'),2500);
 
-        });
- 
- 
-        li.addEventListener('mouseover',function(event){
-                window.clearTimeout(timeout);
-                set_class_name(ul_element,'on');
-        })
-        
-        
-        ul_element.appendChild(li);
-
+var create_element = function(element_parent,element_name,element_id,text_content){
+    
+    var element = document.createElement(element_name);
+    element.setAttribute('id',element_id);
+    element.textContent = text_content
+    
+    if(element_parent == 'body'){
+        document.body.appendChild(element);
+    }else{
+        element_parent.appendChild(element);
     }
     
     
-   
+}
+
+document.addEventListener('DOMContentLoaded',function(event){
+
+        attach_css('css/main.css');
+    
+        create_element('body','ul','ul_id','NAV');
+        
+        ul_id.className = 'off';
+        
+        ul_id.addEventListener('click',function(event){
+           
+              toggle_class(this,'off','on');  
+            
+        });
+        
+        ul_id.addEventListener('mouseover',function(event){
+            
+            this.className = 'on';
+            
+        })
+        
+        
+        
+        
+        //for loop setup for number counting from 1 to 100
+        for(var i=0; i<10; i++){
+           
+           var list_element = document.createElement('li');
+           list_element.setAttribute('id','list_id_'+i);
+           list_element.textContent = 'item #'+i;
+           ul_id.appendChild(list_element);
+           
+           list_element.addEventListener('mouseover',function(event){
+               console.log(this);
+               
+                window.clearTimeout(close_menu_timeout());    
+                
+               
+               
+           });
+           
+           
+           list_element.addEventListener('mouseout',function(event){
+               
+                close_menu_timeout();
+               
+           });
+           
+           
+           
+           
+        };
+
+        
+        
+        
     
 });
+
+

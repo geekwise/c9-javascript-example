@@ -1,19 +1,29 @@
-ul.on{
-    display:block;
-    height:25%;
-    width:250px;
-    float:left;
-    background-color:gold;
+body{
+    background-color: gold;
 }
 
-ul.off{
-    display:block;
-    height:25%;
-    width:250px;
-    float:left;
-    background-color:gold;
+.on > li,.off > li{
+    margin:0;
+    padding:0;
+    text-align:center;
 }
 
-ul.off > li{
+
+.on,.off{
+    height:25%;
+    width:200px;
+    text-align:center;
+    font-size:30px;
+    background-color:lightSeaGreen;
+    
+}
+
+
+
+.off > li{
     display:none;
+}
+
+.on > li{
+    display:block;
 }
