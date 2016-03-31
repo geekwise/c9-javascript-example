@@ -1,10 +1,19 @@
-body{
-    background-color:lightSeaGreen;
-    transition:3s;
+ul.on{
+    display:block;
+    height:25%;
+    width:250px;
+    float:left;
+    background-color:gold;
 }
 
-#input_box{
-    font-size: 30px;
-    height: 30px;
-    text-align: center;
+ul.off{
+    display:block;
+    height:25%;
+    width:250px;
+    float:left;
+    background-color:gold;
+}
+
+ul.off > li{
+    display:none;
 }
