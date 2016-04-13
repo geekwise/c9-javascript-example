@@ -1,50 +1,77 @@
-var photo_container;
+var github_emojis;
 
+var http_request = new XMLHttpRequest;
+http_request.open('GET','https://api.github.com/emojis',false);
 
-
-
-
-
-var add_images = function(){
-    
-    for(var i=0; i < image_urls.length; i++){
-      
-        var image = document.createElement('img');
-        image.setAttribute('src',image_urls[i]);
-        image.setAttribute('id','image_'+i);
-        
-        image.style.width = 'calc(100%/' + image_urls.length + ')';
-        image.addEventListener('mouseover',function(event){
-           
-            
-                this.style.opacity = Math.random();
-                
-                this.style.transition = '.4s';
-                if(this.style.opacity < 0.5){
-                    
-                        this.style.opacity = '0.5';
-                        
-                }
-            
-            
-        });
-        
-        
-        document.body.appendChild(image);
-        
-    };
-    
-
+http_request.onreadystatechange = function(event){	
+	if(this.readyState === this.DONE && this.status === 200){
+	
+		 github_emojis = JSON.parse(this.response);
+		
+	}
 };
+
+var get_random_emoji = function(){
+    
+    var total_number_of_emojis = Object.keys(github_emojis).length;
+    var random_number = Math.round(Math.random()*total_number_of_emojis);
+    
+    var emoji_name = Object.keys(github_emojis)[random_number];
+    emoji_name = emoji_name.toString();
+    
+    var emoji_url = github_emojis[emoji_name];
+    return emoji_url;
+}
+
+
+
+
+var get_emoji_urls = function(amount_to_get){
+    
+        var total_number_of_emojis = Object.keys(github_emojis).length;
+        for(var i=0; i < amount_to_get; i++){
+            
+            var emoji_name = Object.keys(github_emojis)[i];
+            var emoji_url = github_emojis[emoji_name];
+            
+            emoji_name = emoji_name.toString();
+            
+         
+            var image = document.createElement('img');
+            image.addEventListener('click',function(event){
+                
+               this.setAttribute('src',get_random_emoji()); 
+                
+            });
+            
+            
+            
+            var image_name = document.createElement('span');
+            image_name.textContent = emoji_name;
+            
+            
+            
+            
+            
+            
+            image.setAttribute('src',emoji_url);
+
+            document.body.appendChild(image);
+
+        }
+        
+        
+}
+
+
 
 
 document.addEventListener('DOMContentLoaded',function(event){
     
-
-        add_images();
-        
-});
+   
+    http_request.send(null);
+    get_emoji_urls(10);
     
- 
-
+    
+});
 
